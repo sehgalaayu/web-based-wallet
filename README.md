@@ -4,7 +4,7 @@ A minimalistic, futuristic web-based wallet for generating and managing Solana a
 
 ## 🚀 Live Demo
 
-Check out the live app on Vercel: [WebWallet on Vercel](<YOUR_VERCEL_APP_LINK_HERE>)
+Check out the live app on Vercel: [WebWallet on Vercel](https://web-based-wallet-32bt.vercel.app/)
 
 ## ✨ Features
 - Generate a new BIP39 mnemonic (seed phrase)
