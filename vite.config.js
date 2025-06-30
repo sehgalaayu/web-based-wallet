@@ -5,10 +5,13 @@ export default defineConfig({
   plugins: [react()],
   define: {
     global: 'window',
+    'process.env': {},
   },
   resolve: {
     alias: {
       buffer: 'buffer',
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
     },
   },
 })
