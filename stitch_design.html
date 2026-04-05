@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ethereal Vault | Premium Non-Custodial Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#004f54",
+                    "surface-bright": "#373940",
+                    "on-tertiary-container": "#725e00",
+                    "on-secondary": "#00363a",
+                    "on-error": "#690005",
+                    "surface-container-low": "#191b22",
+                    "outline-variant": "#3a494b",
+                    "primary-container": "#00f2ff",
+                    "surface-container-high": "#282a30",
+                    "tertiary-fixed": "#ffe173",
+                    "secondary": "#95d1d6",
+                    "on-tertiary": "#3b2f00",
+                    "on-surface": "#e2e2eb",
+                    "surface-tint": "#00dbe7",
+                    "inverse-surface": "#e2e2eb",
+                    "background": "#0c0e14",
+                    "tertiary-container": "#fed83a",
+                    "tertiary-fixed-dim": "#e8c423",
+                    "secondary-container": "#0b5156",
+                    "surface-container": "#15171d",
+                    "on-tertiary-fixed-variant": "#554500",
+                    "inverse-primary": "#00696f",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#050608",
+                    "on-primary-fixed": "#002022",
+                    "secondary-fixed": "#b1edf2",
+                    "on-tertiary-fixed": "#221b00",
+                    "on-secondary-fixed": "#002022",
+                    "primary": "#e1fdff",
+                    "tertiary": "#fff6e4",
+                    "on-secondary-container": "#87c2c7",
+                    "on-background": "#e2e2eb",
+                    "on-secondary-fixed-variant": "#064f53",
+                    "surface": "#0c0e14",
+                    "on-primary-container": "#006a71",
+                    "outline": "#849495",
+                    "surface-container-highest": "#1e2128",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#95d1d6",
+                    "on-primary": "#00363a",
+                    "surface-dim": "#0c0e14",
+                    "primary-fixed": "#74f5ff",
+                    "primary-fixed-dim": "#00dbe7",
+                    "on-surface-variant": "#b9cacb",
+                    "inverse-on-surface": "#2e3037",
+                    "surface-variant": "#282a30",
+                    "error-container": "#93000a"
+            },
+            "fontFamily": {
+                    "headline": ["Inter"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            },
+            "animation": {
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "float": "float 6s ease-in-out infinite",
+              "fade-in-up": "fade-in-up 0.8s ease-out forwards",
+              "tilt": "tilt 5s linear infinite",
+              "glow-pulse": "glow-pulse 3s infinite",
+              "reveal-blur": "reveal-blur 0.5s ease-out forwards"
+            },
+            "keyframes": {
+              "float": {
+                "0%, 100%": { transform: "translateY(0) scale(1)" },
+                "50%": { transform: "translateY(-20px) scale(1.05)" }
+              },
+              "fade-in-up": {
+                "0%": { opacity: "0", transform: "translateY(20px) scale(0.98)" },
+                "100%": { opacity: "1", transform: "translateY(0) scale(1)" }
+              },
+              "glow-pulse": {
+                "0%, 100%": { "box-shadow": "0 0 20px rgba(0, 242, 255, 0.2)" },
+                "50%": { "box-shadow": "0 0 40px rgba(0, 242, 255, 0.5)" }
+              },
+              "reveal-blur": {
+                "0%": { filter: "blur(12px)", opacity: "0" },
+                "100%": { filter: "blur(0)", opacity: "1" }
+              }
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background: #0c0e14;
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(30, 33, 40, 0.4);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .glass-card:hover {
+        border-color: rgba(0, 242, 255, 0.2);
+        box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.5);
+      }
+      .ghost-border {
+        border: 1px solid rgba(132, 148, 149, 0.15);
+      }
+      .mesh-gradient {
+        background: radial-gradient(at 0% 0%, rgba(0, 242, 255, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 100% 0%, rgba(98, 126, 234, 0.15) 0px, transparent 50%),
+                    radial-gradient(at 100% 100%, rgba(20, 241, 149, 0.1) 0px, transparent 50%);
+        filter: blur(80px);
+      }
+      .noise-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+        pointer-events: none;
+      }
+      .tilt-card {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+      .tilt-card > * {
+        transform: translateZ(20px);
+      }
+      .reveal-transition {
+        transition: filter 0.5s ease-out, opacity 0.5s ease-out;
+      }
+      .cursor-glow {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+        pointer-events: none;
+        position: fixed;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+      }
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .scroll-reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<div class="cursor-glow" id="cursor-glow"></div>
+<!-- Toast Container -->
+<div class="fixed top-8 right-8 z-[100] pointer-events-none" id="toast-container"></div>
+<!-- Command Palette Modal (Hidden by default) -->
+<div class="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] hidden" id="cmd-palette">
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCmdPalette()"></div>
+<div class="relative w-full max-w-xl glass-card rounded-2xl overflow-hidden border border-primary-container/20 shadow-2xl animate-fade-in-up">
+<div class="p-4 flex items-center gap-3 border-b border-white/5 bg-white/5">
+<span class="material-symbols-outlined text-primary-container">search</span>
+<input autofocus="" class="bg-transparent border-none focus:ring-0 text-on-surface w-full font-medium" placeholder="Search commands..." type="text"/>
+<div class="flex items-center gap-1">
+<kbd class="px-2 py-1 rounded bg-surface-container-highest text-[10px] font-bold border border-white/10">ESC</kbd>
+</div>
+</div>
+<div class="p-2">
+<div class="px-3 py-2 text-[10px] font-black text-slate-500 uppercase tracking-widest">General</div>
+<div class="p-3 rounded-xl hover:bg-white/5 flex items-center justify-between cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary-container transition-colors">account_balance_wallet</span>
+<span class="text-sm font-medium">Generate New Wallet</span>
+</div>
+<span class="text-[10px] text-slate-500 font-bold group-hover:text-slate-300">G W</span>
+</div>
+<div class="p-3 rounded-xl hover:bg-white/5 flex items-center justify-between cursor-pointer group">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary-container transition-colors">content_copy</span>
+<span class="text-sm font-medium">Copy Public Address</span>
+</div>
+<span class="text-[10px] text-slate-500 font-bold group-hover:text-slate-300">C A</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-2xl border-b border-white/5">
+<div class="flex justify-between items-center px-8 py-4 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tighter text-[#00f2ff] flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+    Ethereal Vault
+</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-[#00f2ff] border-b-2 border-[#00f2ff] pb-1 font-semibold text-sm transition-all" href="#">Mainnet</a>
+<a class="text-slate-500 font-medium hover:text-[#00f2ff] transition-all text-sm" href="#">Devnet</a>
+<a class="text-slate-500 font-medium hover:text-[#00f2ff] transition-all text-sm" href="#">Testnet</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-container-highest/50 border border-white/5 text-[10px] text-slate-500 font-bold">
+<span class="material-symbols-outlined text-sm">keyboard_command_key</span>
+<span>K</span>
+</div>
+<button class="material-symbols-outlined text-slate-400 hover:text-[#00f2ff] transition-all hover:scale-110 active:scale-90">notifications</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-bold active:scale-95 hover:scale-[1.03] transition-all text-sm hover:shadow-[0_0_20px_rgba(0,242,255,0.3)]">Connect Wallet</button>
+</div>
+</div>
+</nav>
+<div class="flex pt-20">
+<!-- SideNavBar -->
+<aside class="hidden lg:flex flex-col h-screen w-64 bg-background/40 backdrop-blur-lg border-r border-white/5 sticky top-20 p-8 gap-4">
+<div class="mb-8">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-2xl bg-primary-container/10 flex items-center justify-center border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container">account_balance_wallet</span>
+</div>
+<div>
+<h3 class="text-lg font-black text-on-surface leading-none">The Vault</h3>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mt-1">Non-Custodial</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="text-[#00f2ff] bg-[#00f2ff]/10 rounded-xl px-4 py-3 flex items-center gap-3 cursor-pointer hover:bg-[#00f2ff]/15 transition-all group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">account_balance_wallet</span>
+<span class="text-sm font-semibold">Assets</span>
+</div>
+<div class="text-slate-500 hover:bg-white/5 hover:text-white transition-all px-4 py-3 flex items-center gap-3 rounded-xl cursor-pointer group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">receipt_long</span>
+<span class="text-sm font-semibold">Transactions</span>
+</div>
+<div class="text-slate-500 hover:bg-white/5 hover:text-white transition-all px-4 py-3 flex items-center gap-3 rounded-xl cursor-pointer group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">verified_user</span>
+<span class="text-sm font-semibold">Security</span>
+</div>
+<div class="text-slate-500 hover:bg-white/5 hover:text-white transition-all px-4 py-3 flex items-center gap-3 rounded-xl cursor-pointer group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</div>
+</nav>
+<button class="mt-auto bg-surface-container-highest/50 text-primary-container py-4 rounded-2xl border border-primary-container/10 hover:border-primary-container/40 hover:bg-primary-container hover:text-on-primary-container transition-all font-bold hover:scale-[1.02] active:scale-95 shadow-lg">
+                New Wallet
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 px-6 lg:px-12 py-8 max-w-7xl relative">
+<!-- Hero Section -->
+<header class="mb-12 relative overflow-hidden rounded-[2.5rem] p-12 glass-card border border-white/5 animate-fade-in-up">
+<div class="noise-overlay absolute inset-0 z-0"></div>
+<!-- Signature Experience: Animated Mesh -->
+<div class="mesh-gradient absolute -right-40 -top-40 w-[600px] h-[600px] animate-float opacity-40"></div>
+<div class="mesh-gradient absolute -left-20 -bottom-20 w-[400px] h-[400px] animate-float-delayed opacity-20" style="animation-delay: 2s;"></div>
+<div class="relative z-10 max-w-2xl">
+<h1 class="text-5xl lg:text-7xl font-black text-on-surface tracking-tighter mb-6 leading-[0.95] animate-fade-in-up">
+    Non-Custodial <br/><span class="text-primary-container bg-gradient-to-r from-primary-container to-[#627eea] bg-clip-text text-transparent">Web Wallet</span>
+</h1>
+<p class="text-on-surface-variant text-lg font-medium max-w-lg mb-10 leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+    The ultimate destination for ethereal asset management. Complete sovereignty over your keys, seamlessly integrated into your workflow.
+</p>
+<div class="flex flex-wrap gap-4 opacity-0 animate-fade-in-up" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+<button class="bg-primary-container text-on-primary-container px-10 py-4 rounded-2xl font-black shadow-[0_0_40px_rgba(0,242,255,0.2)] hover:shadow-[0_0_50px_rgba(0,242,255,0.4)] hover:scale-[1.05] active:scale-95 transition-all animate-glow-pulse group">
+    Generate Seed
+    <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+</button>
+<button class="bg-surface-container-highest/60 backdrop-blur-md border border-white/10 text-on-surface px-8 py-4 rounded-2xl font-bold hover:bg-surface-bright hover:scale-[1.03] active:scale-95 transition-all">
+    Add ETH Wallet
+</button>
+<button class="bg-surface-container-highest/60 backdrop-blur-md border border-white/10 text-on-surface px-8 py-4 rounded-2xl font-bold hover:bg-surface-bright hover:scale-[1.03] active:scale-95 transition-all">
+    Add Solana Wallet
+</button>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+<!-- Main Grid Left -->
+<div class="xl:col-span-2 space-y-8">
+<!-- Seed Phrase Card -->
+<section class="glass-card rounded-[2rem] p-8 scroll-reveal" id="seed-section">
+<div class="noise-overlay absolute inset-0"></div>
+<div class="flex justify-between items-start mb-8 relative">
+<div>
+<h2 class="text-2xl font-bold tracking-tight text-on-surface mb-2">Backup Seed Phrase</h2>
+<div class="inline-flex items-center px-4 py-1.5 rounded-full text-[10px] font-black bg-error-container/20 text-error border border-error/20 uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm mr-2 animate-pulse">warning</span> NEVER SHARE YOUR PHRASE
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all text-on-surface-variant text-sm font-bold border border-white/5 hover:scale-[1.03] active:scale-95" onclick="revealSeed()">
+<span class="material-symbols-outlined text-lg" id="reveal-icon">visibility</span> <span id="reveal-text">Reveal</span>
+</button>
+<button class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-surface-container-low hover:bg-surface-container transition-all text-on-surface-variant text-sm font-bold border border-white/5 hover:scale-[1.03] active:scale-95" onclick="copyToClipboard('seed-phrase')">
+<span class="material-symbols-outlined text-lg">content_copy</span> Copy All
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative" id="seed-grid">
+<!-- Seed words -->
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">01</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">02</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">03</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">04</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">05</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">06</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">07</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">08</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">09</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">10</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">11</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+<div class="bg-surface-container-lowest/80 border border-white/5 px-5 py-4 rounded-2xl flex items-center gap-4 reveal-transition" style="filter: blur(4px);">
+<span class="text-[10px] text-slate-600 font-black">12</span>
+<span class="text-sm font-mono tracking-wider font-bold">••••••••</span>
+</div>
+</div>
+</section>
+<!-- Wallet Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- ETH Wallet -->
+<div class="tilt-card glass-card rounded-[2rem] p-8 relative overflow-hidden group cursor-pointer scroll-reveal" onmouseleave="resetTilt(this)" onmousemove="handleTilt(event, this)">
+<div class="noise-overlay absolute inset-0"></div>
+<div class="flex justify-between items-start mb-8 relative">
+<span class="px-4 py-1.5 rounded-full bg-slate-100/10 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-[0.2em] border border-white/10">Ethereum</span>
+<div class="w-14 h-14 bg-[#627eea]/20 rounded-2xl flex items-center justify-center border border-[#627eea]/40 group-hover:scale-110 transition-transform duration-500">
+<img alt="ETH" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjEkQLWF9-0HdSOeq0injwgFkScCOnQPitNjSI8t4PKApNOQSDESjqpeVQ0arI-JiS0CCkv_4px3WzH70BziFpNM2wcYdL0Nwjz5rkmXhGsIrBXjKvBA2L-PjiDHFMsg78AnRBvlJ2ejZo5K8LqLqNy-VOsd-qMqqULV52adaEEK6GV1Y-oO5lX_-r7U4jcdD4NutS9KRaVDZFLecR0gdfwoeb4L0-04k7VwrWheLyU0WGXxfZGa-KMcMBQEElyOzGIttLAoj9Ro4"/>
+</div>
+</div>
+<div class="mb-10 relative">
+<p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Portfolio Balance</p>
+<h3 class="text-4xl font-black text-on-surface tracking-tighter">12.45 ETH</h3>
+<p class="text-primary-container font-bold text-lg mt-1 opacity-0 animate-fade-in-up" style="animation-delay: 0.6s; animation-fill-mode: forwards;">$34,812.90 USD</p>
+</div>
+<div class="space-y-4 relative">
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex justify-between items-center group/addr border border-white/5 hover:border-primary-container/30 transition-all" onclick="copyToClipboard('0x4F...7D2E')">
+<span class="text-xs font-mono font-bold text-slate-400">0x4F...7D2E</span>
+<button class="material-symbols-outlined text-lg text-slate-500 group-hover/addr:text-primary-container transition-colors">content_copy</button>
+</div>
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex justify-between items-center border border-white/5">
+<span class="text-xs font-mono text-slate-500 italic">Private Key Protected</span>
+<button class="material-symbols-outlined text-lg text-slate-500 hover:text-primary-container transition-colors">lock</button>
+</div>
+</div>
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-[#627eea]/10 blur-[100px] rounded-full transition-all duration-700 group-hover:scale-150"></div>
+</div>
+<!-- SOL Wallet -->
+<div class="tilt-card glass-card rounded-[2rem] p-8 relative overflow-hidden group cursor-pointer scroll-reveal" onmouseleave="resetTilt(this)" onmousemove="handleTilt(event, this)">
+<div class="noise-overlay absolute inset-0"></div>
+<div class="flex justify-between items-start mb-8 relative">
+<span class="px-4 py-1.5 rounded-full bg-[#14f195]/10 backdrop-blur-md text-[#14f195] text-[10px] font-black uppercase tracking-[0.2em] border border-[#14f195]/20">Solana</span>
+<div class="w-14 h-14 bg-black/40 rounded-2xl flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform duration-500">
+<img alt="SOL" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlNzS4sw-kv9pZVO9xqFyJjOc0-cTLR1YGZ0eCP-p60ljGMIserVFq-bTVl8Mv1zHINkSxlk4esmOakmmV6-l3w40na-te0e7XwmQNNXgMA0bpk3DzFUIOJ3Le4Ytge8HAuA69Q0js_iUm7-IYagtqbYOWUef4rlCvebhGeXH4k7qyX5U9DofZX4Q6dKzockIDo1Nk9Ur_7JV9Zk7wCLYy78IPOVAmE0pRqBBfx2orB066FVO9Kd7kuZg8ZorVgxxGpgJ2xvz49ic"/>
+</div>
+</div>
+<div class="mb-10 relative">
+<p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Portfolio Balance</p>
+<h3 class="text-4xl font-black text-on-surface tracking-tighter">450.2 SOL</h3>
+<p class="text-primary-container font-bold text-lg mt-1 opacity-0 animate-fade-in-up" style="animation-delay: 0.8s; animation-fill-mode: forwards;">$48,171.40 USD</p>
+</div>
+<div class="space-y-4 relative">
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex justify-between items-center group/addr border border-white/5 hover:border-[#14f195]/30 transition-all" onclick="copyToClipboard('Gv5T...mK9P')">
+<span class="text-xs font-mono font-bold text-slate-400">Gv5T...mK9P</span>
+<button class="material-symbols-outlined text-lg text-slate-500 group-hover/addr:text-primary-container transition-colors">content_copy</button>
+</div>
+<div class="bg-surface-container-lowest/40 rounded-xl p-4 flex justify-between items-center border border-white/5">
+<span class="text-xs font-mono text-slate-500 italic">Private Key Protected</span>
+<button class="material-symbols-outlined text-lg text-slate-500 hover:text-primary-container transition-colors">lock</button>
+</div>
+</div>
+<div class="absolute -bottom-20 -right-20 w-64 h-64 bg-[#14f195]/10 blur-[100px] rounded-full transition-all duration-700 group-hover:scale-150"></div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Recent Transactions -->
+<aside class="space-y-6 scroll-reveal">
+<div class="glass-card rounded-[2rem] p-8 h-full relative overflow-hidden">
+<div class="noise-overlay absolute inset-0"></div>
+<div class="flex justify-between items-center mb-8 relative">
+<h2 class="text-xl font-bold tracking-tight text-on-surface">Recent Activity</h2>
+<button class="text-[10px] font-black text-primary-container uppercase tracking-widest hover:underline hover:scale-105 transition-all">View All</button>
+</div>
+<div class="space-y-3 relative" id="activity-panel">
+<!-- Transaction Items -->
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white/0 hover:bg-white/5 transition-all duration-300 group cursor-pointer border border-transparent hover:border-white/5 hover:scale-[1.02] active:scale-95" style="animation: fade-in-up 0.5s ease-out forwards; animation-delay: 0.1s;">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/10 flex items-center justify-center shrink-0 border border-secondary-container/20">
+<span class="material-symbols-outlined text-secondary-container">call_received</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Received ETH</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Today, 2:45 PM</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-on-surface">+1.25</p>
+<div class="flex items-center justify-end gap-1.5 mt-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]"></div>
+<p class="text-[9px] text-green-400 font-black uppercase tracking-tighter">Success</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white/0 hover:bg-white/5 transition-all duration-300 group cursor-pointer border border-transparent hover:border-white/5 hover:scale-[1.02] active:scale-95" style="animation: fade-in-up 0.5s ease-out forwards; animation-delay: 0.2s;">
+<div class="w-12 h-12 rounded-xl bg-primary-container/10 flex items-center justify-center shrink-0 border border-primary-container/20">
+<span class="material-symbols-outlined text-primary-container">swap_horiz</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Swap SOL → USDC</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Today, 11:20 AM</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-on-surface">-50.0</p>
+<div class="flex items-center justify-end gap-1.5 mt-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-green-400 shadow-[0_0_8px_rgba(74,222,128,0.5)]"></div>
+<p class="text-[9px] text-green-400 font-black uppercase tracking-tighter">Success</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white/0 hover:bg-white/5 transition-all duration-300 group cursor-pointer border border-transparent hover:border-white/5 hover:scale-[1.02] active:scale-95" style="animation: fade-in-up 0.5s ease-out forwards; animation-delay: 0.3s;">
+<div class="w-12 h-12 rounded-xl bg-tertiary-container/10 flex items-center justify-center shrink-0 border border-tertiary-container/20">
+<span class="material-symbols-outlined text-tertiary-container">call_made</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Sent ETH</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Yesterday</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-on-surface">-0.12</p>
+<div class="flex items-center justify-end gap-1.5 mt-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-yellow-400 animate-pulse shadow-[0_0_8px_rgba(250,204,21,0.5)]"></div>
+<p class="text-[9px] text-yellow-400 font-black uppercase tracking-tighter">Pending</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white/0 hover:bg-white/5 transition-all duration-300 group cursor-pointer border border-transparent hover:border-white/5 hover:scale-[1.02] active:scale-95" style="animation: fade-in-up 0.5s ease-out forwards; animation-delay: 0.4s;">
+<div class="w-12 h-12 rounded-xl bg-error-container/10 flex items-center justify-center shrink-0 border border-error-container/20">
+<span class="material-symbols-outlined text-error">report</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold text-on-surface truncate">Network Fail</p>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-tight">Oct 23</p>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-error">0.00</p>
+<div class="flex items-center justify-end gap-1.5 mt-0.5">
+<div class="w-1.5 h-1.5 rounded-full bg-error shadow-[0_0_8px_rgba(255,180,171,0.5)]"></div>
+<p class="text-[9px] text-error font-black uppercase tracking-tighter">Error</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Promo/Action in Sidebar -->
+<div class="mt-12 p-8 rounded-3xl bg-gradient-to-br from-primary-container/10 via-transparent to-transparent border border-white/5 relative group cursor-pointer">
+<div class="noise-overlay absolute inset-0"></div>
+<h4 class="text-on-surface font-black text-sm mb-2">Vault Health Check</h4>
+<p class="text-slate-500 text-xs leading-relaxed mb-6">Your security score is 98/100. Run a scan to ensure all nodes are synchronized.</p>
+<button class="w-full py-4 bg-on-surface text-background rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:scale-[1.03] active:scale-95 transition-all hover:bg-primary-container hover:text-on-primary-container">
+    Run Health Check
+</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<!-- Background Decorative Elements -->
+<div class="fixed top-1/4 left-0 w-[500px] h-[500px] bg-primary-container/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 right-0 w-[800px] h-[800px] bg-secondary-container/5 blur-[150px] rounded-full -z-10 pointer-events-none"></div>
+<!-- Sensitive Reveal Backdrop/Modal -->
+<div class="fixed inset-0 z-[110] flex items-center justify-center hidden" id="reveal-modal">
+<div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeRevealModal()"></div>
+<div class="relative w-full max-w-md glass-card rounded-3xl p-10 border border-error/20 text-center animate-fade-in-up">
+<div class="w-20 h-20 bg-error-container/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-error/30">
+<span class="material-symbols-outlined text-error text-4xl">security</span>
+</div>
+<h3 class="text-2xl font-black text-on-surface mb-3 tracking-tighter">Sensitive Operation</h3>
+<p class="text-slate-400 mb-10 leading-relaxed font-medium">You are about to reveal your seed phrase. Ensure no one is watching your screen and you are in a secure environment.</p>
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 bg-error text-on-error rounded-2xl font-black uppercase tracking-widest text-xs hover:brightness-110 active:scale-95 transition-all" onclick="confirmReveal()">I Understand, Reveal Phrase</button>
+<button class="w-full py-4 bg-white/5 text-on-surface rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/10 active:scale-95 transition-all" onclick="closeRevealModal()">Cancel</button>
+</div>
+</div>
+</div>
+<script>
+    // Cursor Glow Effect
+    const cursorGlow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', (e) => {
+        cursorGlow.style.left = e.clientX + 'px';
+        cursorGlow.style.top = e.clientY + 'px';
+    });
+
+    // 3D Tilt Effect for Wallet Cards
+    function handleTilt(e, card) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+
+    function resetTilt(card) {
+        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+    }
+
+    // Scroll Reveal Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // Seed Reveal UX
+    function revealSeed() {
+        document.getElementById('reveal-modal').classList.remove('hidden');
+    }
+
+    function closeRevealModal() {
+        document.getElementById('reveal-modal').classList.add('hidden');
+    }
+
+    function confirmReveal() {
+        closeRevealModal();
+        const words = ['ethereal', 'vault', 'crypto', 'asset', 'sovereign', 'security', 'layer', 'blockchain', 'private', 'secret', 'key', 'access'];
+        const cells = document.querySelectorAll('#seed-grid > div');
+        const revealBtn = document.getElementById('reveal-text');
+        const revealIcon = document.getElementById('reveal-icon');
+
+        cells.forEach((cell, i) => {
+            cell.style.filter = 'blur(12px)';
+            cell.style.opacity = '0';
+            setTimeout(() => {
+                cell.querySelector('span:last-child').innerText = words[i];
+                cell.style.filter = 'blur(0)';
+                cell.style.opacity = '1';
+                cell.classList.add('animate-reveal-blur');
+            }, i * 50);
+        });
+
+        revealBtn.innerText = 'Hide Phrase';
+        revealIcon.innerText = 'visibility_off';
+    }
+
+    // Copy To Clipboard & Toast
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        showToast('Address copied to clipboard');
+        
+        // Add ripple effect logic here if needed
+        const ripple = document.createElement('div');
+        ripple.className = 'fixed inset-0 pointer-events-none bg-primary-container/5 animate-ping z-[200]';
+        document.body.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 1000);
+    }
+
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'bg-surface-container-highest border border-primary-container/20 px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in-up mb-4 backdrop-blur-xl';
+        toast.innerHTML = `
+            <span class="material-symbols-outlined text-primary-container">check_circle</span>
+            <span class="text-sm font-bold text-on-surface">${message}</span>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-20px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Command Palette logic
+    function toggleCmdPalette() {
+        const palette = document.getElementById('cmd-palette');
+        palette.classList.toggle('hidden');
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            toggleCmdPalette();
+        }
+        if (e.key === 'Escape') {
+            document.getElementById('cmd-palette').classList.add('hidden');
+            document.getElementById('reveal-modal').classList.add('hidden');
+        }
+    });
+
+</script>
+</body></html>

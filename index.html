@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ethereal Vault | Premium Non-Custodial Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-primary-fixed-variant": "#004f54",
+              "surface-bright": "#373940",
+              "on-tertiary-container": "#725e00",
+              "on-secondary": "#00363a",
+              "on-error": "#690005",
+              "surface-container-low": "#191b22",
+              "outline-variant": "#3a494b",
+              "primary-container": "#00f2ff",
+              "surface-container-high": "#282a30",
+              "tertiary-fixed": "#ffe173",
+              secondary: "#95d1d6",
+              "on-tertiary": "#3b2f00",
+              "on-surface": "#e2e2eb",
+              "surface-tint": "#00dbe7",
+              "inverse-surface": "#e2e2eb",
+              background: "#0c0e14",
+              "tertiary-container": "#fed83a",
+              "tertiary-fixed-dim": "#e8c423",
+              "secondary-container": "#0b5156",
+              "surface-container": "#15171d",
+              "on-tertiary-fixed-variant": "#554500",
+              "inverse-primary": "#00696f",
+              "on-error-container": "#ffdad6",
+              "surface-container-lowest": "#050608",
+              "on-primary-fixed": "#002022",
+              "secondary-fixed": "#b1edf2",
+              "on-tertiary-fixed": "#221b00",
+              "on-secondary-fixed": "#002022",
+              primary: "#e1fdff",
+              tertiary: "#fff6e4",
+              "on-secondary-container": "#87c2c7",
+              "on-background": "#e2e2eb",
+              "on-secondary-fixed-variant": "#064f53",
+              surface: "#0c0e14",
+              "on-primary-container": "#006a71",
+              outline: "#849495",
+              "surface-container-highest": "#1e2128",
+              error: "#ffb4ab",
+              "secondary-fixed-dim": "#95d1d6",
+              "on-primary": "#00363a",
+              "surface-dim": "#0c0e14",
+              "primary-fixed": "#74f5ff",
+              "primary-fixed-dim": "#00dbe7",
+              "on-surface-variant": "#b9cacb",
+              "inverse-on-surface": "#2e3037",
+              "surface-variant": "#282a30",
+              "error-container": "#93000a",
+            },
+            fontFamily: {
+              headline: ["Inter"],
+              body: ["Inter"],
+              label: ["Inter"],
+            },
+            animation: {
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              float: "float 6s ease-in-out infinite",
+              "fade-in-up": "fade-in-up 0.8s ease-out forwards",
+              tilt: "tilt 5s linear infinite",
+              "glow-pulse": "glow-pulse 3s infinite",
+              "reveal-blur": "reveal-blur 0.5s ease-out forwards",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0) scale(1)" },
+                "50%": { transform: "translateY(-20px) scale(1.05)" },
+              },
+              "fade-in-up": {
+                "0%": {
+                  opacity: "0",
+                  transform: "translateY(20px) scale(0.98)",
+                },
+                "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+              },
+              "glow-pulse": {
+                "0%, 100%": { "box-shadow": "0 0 20px rgba(0, 242, 255, 0.2)" },
+                "50%": { "box-shadow": "0 0 40px rgba(0, 242, 255, 0.5)" },
+              },
+              "reveal-blur": {
+                "0%": { filter: "blur(12px)", opacity: "0" },
+                "100%": { filter: "blur(0)", opacity: "1" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-[#080808] text-[#ebebeb] min-h-screen">
+    <div id="root"></div>
+    <!-- Toast Container -->
+    <div
+      id="toast-container"
+      class="fixed bottom-4 right-4 z-[300] pointer-events-none"
+    ></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

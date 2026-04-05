@@ -1,0 +1,172 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #080808;
+  --surface: #0e0e0e;
+  --border: #1a1a1a;
+  --text-1: #ebebeb;
+  --text-2: #525252;
+  --text-3: #2a2a2a;
+  --green: #4ade80;
+  --red: #f87171;
+  --blue: #7b8ff5;
+  --purple: #a78bfa;
+
+  font-family: "Geist", sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text-1);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+.font-mono-elite {
+  font-family: "Geist Mono", monospace;
+}
+
+.font-body-elite {
+  font-family: "Geist", sans-serif;
+}
+
+.label-caps {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 300,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+.elite-glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.elite-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.neon-outline {
+  border: 1px solid var(--border);
+}
+
+.metric-value {
+  font-family: "Geist", sans-serif;
+  font-feature-settings: "tnum" on;
+  letter-spacing: -2px;
+  font-weight: 300;
+  font-size: 40px;
+  color: var(--text-1);
+}
+
+.wallet-lift {
+  transition: all 150ms ease;
+}
+
+.wallet-lift:hover {
+  border-color: #2a2a2a;
+}
+
+.shine-sweep::before {
+  content: none;
+}
+
+.pulse-dot {
+  animation: dot-pulse 1.7s ease-in-out infinite;
+}
+
+.stagger-fade {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: stagger-fade 280ms ease forwards;
+}
+
+.countup-pop {
+  animation: countup-pop 360ms ease;
+}
+
+.tooltip-flash {
+  animation: tooltip-flash 1.25s ease forwards;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(74, 222, 128, 0);
+  }
+}
+
+@keyframes stagger-fade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countup-pop {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tooltip-flash {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f1f;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2a;
+}

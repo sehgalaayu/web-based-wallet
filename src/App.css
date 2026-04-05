@@ -1,0 +1,38 @@
+/* App-specific styles */
+.animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-glow-pulse {
+    animation: glow-pulse 3s infinite;
+}
+
+.animate-reveal-blur {
+    animation: reveal-blur 0.5s ease-out forwards;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Animations are defined in index.html via Tailwind config, 
+   but we can also define them here for robustness */
+@keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
+    50% { box-shadow: 0 0 40px rgba(0, 242, 255, 0.5); }
+}
+
+@keyframes reveal-blur {
+    0% { filter: blur(12px); opacity: 0; }
+    100% { filter: blur(0); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+}
