@@ -156,7 +156,6 @@ function App() {
   const [ethRevealedPrivate, setEthRevealedPrivate] = useState([]);
   const [solRevealedPrivate, setSolRevealedPrivate] = useState([]);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const ethWalletRef = useRef(null);
   const solWalletRef = useRef(null);
@@ -533,8 +532,6 @@ function App() {
         activePage={activePage}
         setActivePage={setActivePage}
         network={network}
-        collapsed={sidebarCollapsed}
-        setCollapsed={setSidebarCollapsed}
       />
 
       {/* Mobile Sidebar Overlay */}
@@ -612,9 +609,7 @@ function App() {
       )}
 
       <header
-        className={`fixed top-0 z-30 flex items-center justify-between border-b border-white/10 bg-[#080808]/80 backdrop-blur-xl px-4 md:px-6 ${
-          sidebarCollapsed ? "md:left-[80px]" : "md:left-[240px]"
-        }`}
+        className="fixed top-0 z-30 flex items-center justify-between border-b border-white/10 bg-[#080808]/80 backdrop-blur-xl px-4 md:left-[240px] md:px-6"
         style={{
           left: 0,
           right: 0,
@@ -785,7 +780,7 @@ function App() {
       </header>
 
       <div
-        className={`flex flex-col ${sidebarCollapsed ? "md:ml-[80px]" : "md:ml-[240px]"}`}
+        className="flex flex-col md:ml-[240px]"
         style={{
           marginTop: TOPBAR_HEIGHT,
           minHeight: `calc(100vh - ${TOPBAR_HEIGHT}px)`,

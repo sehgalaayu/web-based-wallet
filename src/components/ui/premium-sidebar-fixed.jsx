@@ -1,41 +1,14 @@
-import { useState } from "react";
-import {
-  Home,
-  Activity,
-  Wallet,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react";
+import { Home, Activity, Wallet } from "lucide-react";
 
-export function PremiumSidebar({
-  activePage,
-  setActivePage,
-  network,
-  collapsed,
-  setCollapsed,
-}) {
-  const [internalCollapsed, setInternalCollapsed] = useState(false);
-
-  const isControlled =
-    typeof collapsed === "boolean" && typeof setCollapsed === "function";
-  const isCollapsed = isControlled ? collapsed : internalCollapsed;
-  const toggleCollapsed = () => {
-    if (isControlled) setCollapsed(!isCollapsed);
-    else setInternalCollapsed(!isCollapsed);
-  };
+export function PremiumSidebar({ activePage, setActivePage, network }) {
+  const isCollapsed = false;
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-40 hidden h-screen border-r border-white/5 bg-black/80 backdrop-blur-xl md:flex md:flex-col md:justify-between ${
-        isCollapsed ? "w-[80px]" : "w-[240px]"
-      } overflow-hidden transition-all duration-300`}
+      className={`fixed left-0 top-0 z-40 hidden h-screen border-r border-white/5 bg-black/80 backdrop-blur-xl md:flex md:flex-col md:justify-between ${"w-[240px]"} overflow-hidden transition-all duration-300`}
     >
       <div>
-        <div
-          className={`flex items-center justify-between py-5 ${
-            isCollapsed ? "px-2" : "px-4"
-          }`}
-        >
+        <div className="flex items-center justify-between px-4 py-5">
           <div
             className={`flex items-center ${isCollapsed ? "gap-0" : "gap-3"}`}
           >
@@ -49,17 +22,6 @@ export function PremiumSidebar({
               </span>
             )}
           </div>
-
-          <button
-            onClick={toggleCollapsed}
-            className="rounded-md border border-white/10 bg-white/5 p-1 text-white/50 transition hover:text-white"
-          >
-            {isCollapsed ? (
-              <PanelLeftOpen size={18} />
-            ) : (
-              <PanelLeftClose size={18} />
-            )}
-          </button>
         </div>
 
         <div className="mt-6 flex flex-col gap-2 px-2">
